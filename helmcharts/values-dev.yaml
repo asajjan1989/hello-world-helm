@@ -8,7 +8,7 @@ pdb:
 
 terminationGracePeriodSeconds: 60
 
-namespace: som-dev
+namespace: demo-dev
 serviceName: hello-world-helm
 selectorLabels: hello-world-helm
 
