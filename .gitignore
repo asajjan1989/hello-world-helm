@@ -1,0 +1,30 @@
+```
+# Ignore build artifacts
+target/
+*.class
+*.jar
+*.war
+*.ear
+
+# Ignore IDE files
+.idea/
+*.iml
+.vscode/
+.classpath
+.project
+.settings/
+
+# Ignore sensitive files
+.env
+*.pem
+*.key
+*.cert
+application-secret.yml
+
+# Ignore logs
+*.log
+
+# Ignore dependency caches
+.mvn/
+dependency-reduced-pom.xml
+```

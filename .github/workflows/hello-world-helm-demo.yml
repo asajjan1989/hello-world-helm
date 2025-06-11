@@ -1,0 +1,60 @@
+name: Build and Push Docker Image
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'src/**'   
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+
+    - name: Set up JDK
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'temurin'
+        java-version: '21'
+
+    - name: Set up Maven
+      uses: stCarolas/setup-maven@v4
+      with:
+        maven-version: '3.8.8'
+
+    - name: Build with Maven
+      run: mvn clean package -DskipTests
+
+    - name: Get Docker tag from commit count
+      id: vars
+      run: |
+        COMMITS=$(git rev-list --count HEAD)
+        MINOR=$((COMMITS % 100))
+        MAJOR=$((COMMITS / 100))
+        TAG="$MAJOR.$MINOR"
+        echo "docker_tag=$TAG" >> $GITHUB_OUTPUT
+
+    - name: Log in to Docker Hub
+      uses: docker/login-action@v3
+      with:
+        username: asajjan246
+        password: Avinash@1015
+
+    - name: Build Docker image
+      run: docker build -t asajjan246/hello-world-app:${{ steps.vars.outputs.docker_tag }} .
+
+    - name: Push Docker image
+      run: docker push asajjan246/hello-world-app:${{ steps.vars.outputs.docker_tag }}
+     
+    - name: Update deployment.yaml with new Docker tag
+      run: |
+        TAG=${{ steps.vars.outputs.docker_tag }}
+        sed -i "s|image: asajjan246/hello-world-app:.*|image: asajjan246/hello-world-app:$TAG|" helmcharts/deployment.yaml
+                 
+          
