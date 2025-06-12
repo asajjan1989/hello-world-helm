@@ -51,10 +51,5 @@ jobs:
 
     - name: Push Docker image
       run: docker push asajjan246/hello-world-app:${{ steps.vars.outputs.docker_tag }}
-     
-    - name: Update deployment.yaml with new Docker tag
-      run: |
-        TAG=${{ steps.vars.outputs.docker_tag }}
-        sed -i "s|image: asajjan246/hello-world-app:.*|image: asajjan246/hello-world-app:$TAG|" helmcharts/deployment.yaml
                  
           
