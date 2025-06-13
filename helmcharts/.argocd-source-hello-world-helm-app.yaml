@@ -1,0 +1,8 @@
+helm:
+  parameters:
+  - name: image.name
+    value: asajjan246/hello-world-app
+    forcestring: true
+  - name: image.tag
+    value: "0.9"
+    forcestring: true
