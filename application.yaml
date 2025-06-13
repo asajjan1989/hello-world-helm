@@ -5,10 +5,10 @@ metadata:
   namespace: argocd
   annotations:
     argocd-image-updater.argoproj.io/image-list: asajjan246/hello-world-app
-    argocd-image-updater.argoproj.io/write-back-method: git-only
+    argocd-image-updater.argoproj.io/write-back-method: git
     argocd-image-updater.argoproj.io/git-branch: main
     argocd-image-updater.argoproj.io/image-tag-update-strategy: semver
-    argocd-image-updater.argoproj.io/write-back-target: helmcharts/values-dev.yaml
+    argocd-image-updater.argoproj.io/helm-values: image.tag
 spec:
   project: default
 
